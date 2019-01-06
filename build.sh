@@ -248,7 +248,7 @@ elif [ ! -f "${FLAG_DIR}/mongoose_${MONGOOSE_VERSION}" ] \
     [ ! -e  mongoose-${MONGOOSE_VERSION}.tar.gz] && wget --no-check-certificate -O mongoose-${MONGOOSE_VERSION}.tar.gz ${MONGOOSE_URL}
     tar zxf mongoose-${MONGOOSE_VERSION}.tar.gz --recursive-unlink
     cd mongoose-${MONGOOSE_VERSION}
-    gcc -c -D_GNU_SOURCE -D__STDC_LIMIT_MACROS -g2 -pipe -Wall -Werror -fPIC mongoose.c
+    gcc -c -D_GNU_SOURCE -D__STDC_LIMIT_MACROS -g2 -pipe -Wall  -fPIC mongoose.c
     ar -lr libmongoose.a mongoose.o
     cp mongoose.h ${DEPS_PREFIX}/include
     cp libmongoose.a ${DEPS_PREFIX}/lib

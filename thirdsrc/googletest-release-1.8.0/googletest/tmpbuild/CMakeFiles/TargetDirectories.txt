@@ -1,0 +1,8 @@
+/home/s10196/proj/tera/thirdsrc/googletest-release-1.8.0/googletest/tmpbuild/CMakeFiles/install.dir
+/home/s10196/proj/tera/thirdsrc/googletest-release-1.8.0/googletest/tmpbuild/CMakeFiles/list_install_components.dir
+/home/s10196/proj/tera/thirdsrc/googletest-release-1.8.0/googletest/tmpbuild/CMakeFiles/edit_cache.dir
+/home/s10196/proj/tera/thirdsrc/googletest-release-1.8.0/googletest/tmpbuild/CMakeFiles/rebuild_cache.dir
+/home/s10196/proj/tera/thirdsrc/googletest-release-1.8.0/googletest/tmpbuild/CMakeFiles/gtest.dir
+/home/s10196/proj/tera/thirdsrc/googletest-release-1.8.0/googletest/tmpbuild/CMakeFiles/gtest_main.dir
+/home/s10196/proj/tera/thirdsrc/googletest-release-1.8.0/googletest/tmpbuild/CMakeFiles/install/strip.dir
+/home/s10196/proj/tera/thirdsrc/googletest-release-1.8.0/googletest/tmpbuild/CMakeFiles/install/local.dir

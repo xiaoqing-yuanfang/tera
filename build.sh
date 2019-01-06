@@ -36,8 +36,8 @@ if [ ${BOOST_VERSION} == "DISABLE" ]; then
     echo "Disable boost."
 elif [ ! -f "${FLAG_DIR}/boost_${BOOST_VERSION}" ] \
     || [ ! -d "${DEPS_PREFIX}/boost_${BOOST_VERSION}/boost" ]; then
-    wget --no-check-certificate -O boost_${BOOST_VERSION}.tar.bz2 ${BOOST_URL}
-    tar xjf boost_${BOOST_VERSION}.tar.bz2 --recursive-unlink
+    [ ! -e boost_${BOOST_VERSION}.tar.bz2 ] && wget --no-check-certificate -O boost_${BOOST_VERSION}.tar.bz2 ${BOOST_URL}
+    tar jxvf boost_${BOOST_VERSION}.tar.bz2 --recursive-unlink
     rm -rf ${DEPS_PREFIX}/boost_${BOOST_VERSION}
     mv boost_${BOOST_VERSION} ${DEPS_PREFIX}
     touch "${FLAG_DIR}/boost_${BOOST_VERSION}"
@@ -49,11 +49,11 @@ if [ ${PROTOBUF_VERSION} == "DISABLE" ]; then
 elif [ ! -f "${FLAG_DIR}/protobuf_${PROTOBUF_VERSION}" ] \
     || [ ! -f "${DEPS_PREFIX}/lib/libprotobuf.a" ] \
     || [ ! -d "${DEPS_PREFIX}/include/google/protobuf" ]; then
-    wget --no-check-certificate -O protobuf-${PROTOBUF_VERSION}.tar.gz ${PROTOBUF_URL}
-    tar zxf protobuf-${PROTOBUF_VERSION}.tar.gz --recursive-unlink
+    [ ! -e protobuf-${PROTOBUF_VERSION}.tar.bz2 ] &&  wget --no-check-certificate -O protobuf-${PROTOBUF_VERSION}.tar.bz2 ${PROTOBUF_URL}
+    tar jxvf protobuf-${PROTOBUF_VERSION}.tar.bz2 --recursive-unlink
     cd protobuf-${PROTOBUF_VERSION}
     ./configure ${DEPS_CONFIG}
-    make -j4
+    make
     make install
     cd -
     touch "${FLAG_DIR}/protobuf_${PROTOBUF_VERSION}"
@@ -65,7 +65,7 @@ if [ ${SNAPPY_VERSION} == "DISABLE" ]; then
 elif [ ! -f "${FLAG_DIR}/snappy_${SNAPPY_VERSION}" ] \
     || [ ! -f "${DEPS_PREFIX}/lib/libsnappy.a" ] \
     || [ ! -f "${DEPS_PREFIX}/include/snappy.h" ]; then
-    wget --no-check-certificate -O snappy-${SNAPPY_VERSION}.tar.gz ${SNAPPY_URL}
+    [ ! -e snappy-${SNAPPY_VERSION}.tar.gz ] &&  wget --no-check-certificate -O snappy-${SNAPPY_VERSION}.tar.gz ${SNAPPY_URL}
     tar zxf snappy-${SNAPPY_VERSION}.tar.gz --recursive-unlink
     cd snappy-${SNAPPY_VERSION}
     ./configure ${DEPS_CONFIG}
@@ -81,7 +81,7 @@ if [ ${SOFA_PBRPC_VERSION} == "DISABLE" ]; then
 elif [ ! -f "${FLAG_DIR}/sofa-pbrpc_${SOFA_PBRPC_VERSION}" ] \
     || [ ! -f "${DEPS_PREFIX}/lib/libsofa-pbrpc.a" ] \
     || [ ! -d "${DEPS_PREFIX}/include/sofa/pbrpc" ]; then
-    wget --no-check-certificate -O sofa-pbrpc-${SOFA_PBRPC_VERSION}.tar.gz ${SOFA_PBRPC_URL}
+    [ ! -e sofa-pbrpc-${SOFA_PBRPC_VERSION}.tar.gz ] &&  wget --no-check-certificate -O sofa-pbrpc-${SOFA_PBRPC_VERSION}.tar.gz ${SOFA_PBRPC_URL}
     tar zxf sofa-pbrpc-${SOFA_PBRPC_VERSION}.tar.gz --recursive-unlink
     cd sofa-pbrpc-${SOFA_PBRPC_VERSION}
     sed -i '/BOOST_HEADER_DIR=/ d' depends.mk
@@ -103,7 +103,7 @@ if [ ${ZOOKEEPER_VERSION} == "DISABLE" ]; then
 elif [ ! -f "${FLAG_DIR}/zookeeper_${ZOOKEEPER_VERSION}" ] \
     || [ ! -f "${DEPS_PREFIX}/lib/libzookeeper_mt.a" ] \
     || [ ! -d "${DEPS_PREFIX}/include/zookeeper" ]; then
-    wget --no-check-certificate -O zookeeper-${ZOOKEEPER_VERSION}.tar.gz ${ZOOKEEPER_URL}
+    [ ! -e zookeeper-${ZOOKEEPER_VERSION}.tar.gz ] &&  wget --no-check-certificate -O zookeeper-${ZOOKEEPER_VERSION}.tar.gz ${ZOOKEEPER_URL}
     tar zxf zookeeper-${ZOOKEEPER_VERSION}.tar.gz --recursive-unlink
     cd zookeeper-${ZOOKEEPER_VERSION}/src/c
     ./configure ${DEPS_CONFIG}
@@ -119,7 +119,7 @@ if [ ${GFLAGS_VERSION} == "DISABLE" ]; then
 elif [ ! -f "${FLAG_DIR}/gflags_${GFLAGS_VERSION}" ] \
     || [ ! -f "${DEPS_PREFIX}/lib/libgflags.a" ] \
     || [ ! -d "${DEPS_PREFIX}/include/gflags" ]; then
-    wget --no-check-certificate -O gflags-${GFLAGS_VERSION}.tar.gz ${GFLAGS_URL}
+    [ ! -e gflags-${GFLAGS_VERSION}.tar.gz ] &&  wget --no-check-certificate -O gflags-${GFLAGS_VERSION}.tar.gz ${GFLAGS_URL}
     tar zxf gflags-${GFLAGS_VERSION}.tar.gz --recursive-unlink
     cd gflags-${GFLAGS_VERSION}
     cmake -DCMAKE_INSTALL_PREFIX=${DEPS_PREFIX} -DGFLAGS_NAMESPACE=google -DCMAKE_CXX_FLAGS=-fPIC
@@ -135,7 +135,7 @@ if [ ${GLOG_VERSION} == "DISABLE" ]; then
 elif [ ! -f "${FLAG_DIR}/glog_${GLOG_VERSION}" ] \
     || [ ! -f "${DEPS_PREFIX}/lib/libglog.a" ] \
     || [ ! -d "${DEPS_PREFIX}/include/glog" ]; then
-    wget --no-check-certificate -O glog-${GLOG_VERSION}.tar.gz ${GLOG_URL}
+    [ ! -e glog-${GLOG_VERSION}.tar.gz ] && wget --no-check-certificate -O glog-${GLOG_VERSION}.tar.gz ${GLOG_URL}
     tar zxf glog-${GLOG_VERSION}.tar.gz --recursive-unlink
     cd glog-${GLOG_VERSION}
     ./configure ${DEPS_CONFIG} CPPFLAGS=-I${DEPS_PREFIX}/include LDFLAGS=-L${DEPS_PREFIX}/lib
@@ -151,7 +151,7 @@ if [ ${GTEST_VERSION} == "DISABLE" ]; then
 elif [ ! -f "${FLAG_DIR}/gtest_${GTEST_VERSION}" ] \
     || [ ! -f "${DEPS_PREFIX}/lib/libgtest.a" ] \
     || [ ! -d "${DEPS_PREFIX}/include/gtest" ]; then
-    wget --no-check-certificate -O googletest-release-${GTEST_VERSION}.tar.gz ${GTEST_URL}
+    [ ! -e googletest-release-${GTEST_VERSION}.tar.gz ] && wget --no-check-certificate -O googletest-release-${GTEST_VERSION}.tar.gz ${GTEST_URL}
     tar zxf googletest-release-${GTEST_VERSION}.tar.gz --recursive-unlink
     cd googletest-release-${GTEST_VERSION}/googletest
 
@@ -176,7 +176,7 @@ if [ ${LIBUNWIND_VERSION} == "DISABLE" ]; then
 elif [ ! -f "${FLAG_DIR}/libunwind_${LIBUNWIND_VERSION}" ] \
     || [ ! -f "${DEPS_PREFIX}/lib/libunwind.a" ] \
     || [ ! -f "${DEPS_PREFIX}/include/libunwind.h" ]; then
-    wget --no-check-certificate -O libunwind-${LIBUNWIND_VERSION}.tar.gz ${LIBUNWIND_URL}
+    [ ! -e libunwind-${LIBUNWIND_VERSION}.tar.gz ] && wget --no-check-certificate -O libunwind-${LIBUNWIND_VERSION}.tar.gz ${LIBUNWIND_URL}
     tar xzf libunwind-${LIBUNWIND_VERSION}.tar.gz --recursive-unlink
     cd libunwind-${LIBUNWIND_VERSION}
     ./configure ${DEPS_CONFIG}
@@ -191,7 +191,7 @@ if [ ${GPERFTOOLS_VERSION} == "DISABLE" ]; then
     echo "Disable gperftools."
 elif [ ! -f "${FLAG_DIR}/gperftools_${GPERFTOOLS_VERSION}" ] \
     || [ ! -f "${DEPS_PREFIX}/lib/libtcmalloc_minimal.a" ]; then
-    wget --no-check-certificate -O gperftools-${GPERFTOOLS_VERSION}.tar.gz ${GPERFTOOLS_URL}
+    [ ! -e gperftools-${GPERFTOOLS_VERSION}.tar.gz ] && wget --no-check-certificate -O gperftools-${GPERFTOOLS_VERSION}.tar.gz ${GPERFTOOLS_URL}
     tar zxf gperftools-${GPERFTOOLS_VERSION}.tar.gz --recursive-unlink
     cd gperftools-${GPERFTOOLS_VERSION}
     ./configure ${DEPS_CONFIG} CPPFLAGS=-I${DEPS_PREFIX}/include LDFLAGS=-L${DEPS_PREFIX}/lib
@@ -207,7 +207,7 @@ if [ ${INS_VERSION} == "DISABLE" ]; then
 elif [ ! -f "${FLAG_DIR}/ins_${INS_VERSION}" ] \
     || [ ! -f "${DEPS_PREFIX}/lib/libins_sdk.a" ] \
     || [ ! -f "${DEPS_PREFIX}/include/ins_sdk.h" ]; then
-    wget --no-check-certificate -O ins-${INS_VERSION}.tar.gz ${INS_URL}
+    [ ! -e ins-${INS_VERSION}.tar.gz ] && wget --no-check-certificate -O ins-${INS_VERSION}.tar.gz ${INS_URL}
     tar zxf ins-${INS_VERSION}.tar.gz --recursive-unlink
     cd ins-${INS_VERSION}
     sed -i "s|^PREFIX=.*|PREFIX=${DEPS_PREFIX}|" Makefile
@@ -230,7 +230,7 @@ if [ ${NOSE_VERSION} == "DISABLE" ]; then
 elif [ ! -f "${FLAG_DIR}/nose_${NOSE_VERSION}" ] \
     || [ ! -f "${DEPS_PREFIX}/bin/nosetests" ] \
     || [ ! -d "${DEPS_PREFIX}/lib/nose" ]; then
-    wget --no-check-certificate -O nose-${NOSE_VERSION}.tar.gz ${NOSE_URL}
+    [ ! -e nose-${NOSE_VERSION}.tar.gz ] && wget --no-check-certificate -O nose-${NOSE_VERSION}.tar.gz ${NOSE_URL}
     tar zxf nose-${NOSE_VERSION}.tar.gz --recursive-unlink
     cd nose-${NOSE_VERSION}
     export PYTHONPATH=${DEPS_PREFIX}/lib
@@ -245,7 +245,7 @@ if [ ${MONGOOSE_VERSION} == "DISABLE" ]; then
 elif [ ! -f "${FLAG_DIR}/mongoose_${MONGOOSE_VERSION}" ] \
     || [ ! -f "${DEPS_PREFIX}/include/mongoose.h" ] \
     || [ ! -f "${DEPS_PREFIX}/lib/libmongoose.a" ]; then
-    wget --no-check-certificate -O mongoose-${MONGOOSE_VERSION}.tar.gz ${MONGOOSE_URL}
+    [ ! -e  mongoose-${MONGOOSE_VERSION}.tar.gz] && wget --no-check-certificate -O mongoose-${MONGOOSE_VERSION}.tar.gz ${MONGOOSE_URL}
     tar zxf mongoose-${MONGOOSE_VERSION}.tar.gz --recursive-unlink
     cd mongoose-${MONGOOSE_VERSION}
     gcc -c -D_GNU_SOURCE -D__STDC_LIMIT_MACROS -g2 -pipe -Wall -Werror -fPIC mongoose.c

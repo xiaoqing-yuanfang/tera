@@ -6,6 +6,7 @@
 
 #include <boost/algorithm/string.hpp>
 #include <sstream>
+#include <vector>
  
 namespace tera { 
 

@@ -6,6 +6,7 @@
 #define TERA_COMMOM_METRIC_CACHE_COLLECTOR_H_
  
 #include <cmath> 
+#include <math.h> 
 #include <string>
  
 #include "common/metric/collector_report_publisher.h" 

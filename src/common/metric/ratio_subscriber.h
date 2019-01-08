@@ -5,6 +5,7 @@
 #include "common/metric/subscriber.h"
 #include <cassert>
 #include <cmath>
+#include <math.h>
 
 namespace tera {
 class RatioSubscriber : public Subscriber {
